@@ -91,7 +91,24 @@ expenses = st.number_input("Expenses (Ksh)", 0)
 to_boss = st.number_input("Cash to Boss (Ksh)", 0)
 total_income = total_sales + accommodation + chama
 profit = total_income - (expenses + to_boss)
+Update Amount column
+edited["Amount"] = edited["Sales"] * edited["Selling Price"]
 
+
+summary_df = pd.DataFrame({
+    "Item": ["", "", "", "", "", "SUMMARY ↓", "Total Sales", "Accommodation", "Chama", "Expenses", "To Boss", "Profit"],
+    "Amount": ["", "", "", "", "", "", total_sales, accommodation, chama, expenses, to_boss, profit]
+})
+
+
+final_df = pd.concat([edited, summary_df], ignore_index=True)
+
+
+final_df.to_csv("stock_sheet_summary.csv", index=False)
+
+
+with open("stock_sheet_summary.csv", "rb") as f:
+    st.download_button("⬇️ Download Stock Summary", f, "stock_sheet_summary.csv")
 
 col1, col2 = st.columns(2)
 with col1:
