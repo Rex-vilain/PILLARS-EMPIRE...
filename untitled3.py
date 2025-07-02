@@ -91,7 +91,7 @@ expenses = st.number_input("Expenses (Ksh)", 0)
 to_boss = st.number_input("Cash to Boss (Ksh)", 0)
 total_income = total_sales + accommodation + chama
 profit = total_income - (expenses + to_boss)
-Update Amount column
+
 edited["Amount"] = edited["Sales"] * edited["Selling Price"]
 
 
