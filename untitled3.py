@@ -117,4 +117,4 @@ st.download_button(
     mime="text/csv"
 )
 
-!pip install streamlit
+
