@@ -7,7 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1cfFz-S65U2xqIcxruvfWIlVwp0ukOxY7
 """
 
-pip install gspread gspread_dataframe oauth2client
 
 import pandas as pd
 from datetime import datetime
