@@ -42,6 +42,8 @@ print("✅ Entry saved to records.csv")
 import streamlit as st
 import pandas as pd
 import os
+import os
+from datetime import datetime
 
 st.set_page_config(layout="wide")
 st.title("Pillars Bar & Restaurant Stock Sheet")
@@ -91,6 +93,34 @@ expenses = st.number_input("Expenses (Ksh)", 0)
 to_boss = st.number_input("Cash to Boss (Ksh)", 0)
 total_income = total_sales + accommodation + chama
 profit = total_income - (expenses + to_boss)
+
+
+if not os.path.exists("data_logs"):
+    os.makedirs("data_logs")
+
+
+today = datetime.now().strftime("%Y-%m-%d")
+filename = f"data_logs/{today}.csv"
+
+
+edited["Amount"] = edited["Sales"] * edited["Selling Price"]
+edited.to_csv(filename, index=False)
+
+
+with open(filename, "rb") as f:
+    st.download_button(
+        label="Download Today's Stock Data",
+        data=f,
+        file_name=f"{today}_stock.csv",
+        mime="text/csv"
+    )
+st.subheader("📁 View Saved Records")
+log_files = sorted(os.listdir("data_logs"))
+
+selected_log = st.selectbox("Select a Date to View Records", log_files)
+if selected_log:
+    df_log = pd.read_csv(f"data_logs/{selected_log}")
+    st.dataframe(df_log)
 
 summary_data = {
     "Total Sales": [total_sales],
