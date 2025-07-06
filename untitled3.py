@@ -10,6 +10,24 @@ Original file is located at
 
 import pandas as pd
 from datetime import datetime
+import streamlit as st
+import pandas as pd
+from datetime import datetime
+
+st.set_page_config(layout="wide")
+st.title("Pillars Bar & Restaurant Stock Sheet")
+
+
+st.sidebar.title("User Login")
+username = st.sidebar.text_input("Enter your name", max_chars=30)
+if not username:
+    st.warning("Please enter your name to proceed.")
+    st.stop()
+
+today = datetime.now().strftime("%Y-%m-%d")
+st.sidebar.markdown(f"*Logged in as:* {username}")
+st.sidebar.markdown(f"*Date:* {today}")
+
 
 
 new_entry = {
@@ -164,6 +182,9 @@ with col2:
     st.metric("Expenses", f"Ksh {expenses:,.2f}")
     st.metric("To Boss", f"Ksh {to_boss:,.2f}")
     st.metric("Profit", f"Ksh {profit:,.2f}")
+
+df["Recorded By"] = username
+df["Date"] = today
 
 
 if st.button("Save Data"):
