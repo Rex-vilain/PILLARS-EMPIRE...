@@ -115,6 +115,16 @@ profit = total_income - (expenses + to_boss)
 
 if not os.path.exists("data_logs"):
     os.makedirs("data_logs")
+date_filter = st.date_input("📅 Filter by Date")
+selected_log = f"{date_filter}_stock.csv"
+log_path = f"data_logs/{selected_log}"
+
+if os.path.exists(log_path):
+    df_log = pd.read_csv(log_path)
+    st.dataframe(df_log)
+else:
+    st.warning("No data found for that date.")
+
 
 
 today = datetime.now().strftime("%Y-%m-%d")
@@ -189,6 +199,12 @@ df["Date"] = today
 
 if st.button("Save Data"):
     edited["Amount"] = edited["Sales"] * edited["Selling Price"]
+    search_query = st.text_input("🔍 Search Item")
+if search_query:
+    filtered_df = edited[edited['Item'].str.contains(search_query, case=False)]
+    st.dataframe(filtered_df)
+else:
+    st.dataframe(edited)
     edited.to_csv(CSV_FILE, index=False)
     st.success(f"Data saved to {CSV_FILE}!")
 
