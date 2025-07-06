@@ -160,6 +160,15 @@ expenses_data = {
     "Cash to Boss": to_boss
 }
 
+
+import numpy as np
+
+values = np.array(list(expenses_data.values()))
+if np.any(values <= 0) or values.sum() == 0:
+    st.error("Expenses data must contain positive, non-zero values.")
+else:
+    ax2.pie(values, labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
+
 fig2, ax2 = plt.subplots()
 ax2.pie(expenses_data.values(), labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
 ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
