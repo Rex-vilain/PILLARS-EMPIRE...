@@ -14,6 +14,8 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
+import numpy as np
+import os
 
 st.set_page_config(layout="wide")
 st.title("Pillars Bar & Restaurant Stock Sheet")
@@ -63,6 +65,9 @@ import pandas as pd
 import os
 import os
 from datetime import datetime
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 st.set_page_config(layout="wide")
 st.title("Pillars Bar & Restaurant Stock Sheet")
@@ -164,21 +169,19 @@ expenses_data = {
 import numpy as np
 
 values = np.array(list(expenses_data.values()))
-if np.any(values <= 0) or values.sum() == 0:
-    st.error("Expenses data must contain positive, non-zero values.")
+# Check for NaN values before plotting
+if np.isnan(values).any() or np.all(values == 0):
+    st.error("Expenses data must contain valid non-zero values to plot the pie chart.")
 else:
+    fig2, ax2 = plt.subplots()
     ax2.pie(values, labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
-
-fig2, ax2 = plt.subplots()
-ax2.pie(list(expenses_data.values()), labels=list(expenses_data.keys()), autopct='%1.1f%%', startangle=140)
-ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-
-st.pyplot(fig2)
+    ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    st.pyplot(fig2)
 import streamlit as st
 import pandas as pd
 
 #Assuming you already have these variables calculated somewhere above:
-total_sales, accommodation, chama, expenses, to_boss, profit
+# total_sales, accommodation, chama, expenses, to_boss, profit
 
 summary_data = {
     "Category": ["Total Sales", "Accommodation", "Chama", "Expenses", "Cash to Boss", "Profit"],
@@ -257,15 +260,16 @@ with col2:
 df["Recorded By"] = username
 df["Date"] = today
 
-
-if st.button("Save Data"):
-    edited["Amount"] = edited["Sales"] * edited["Selling Price"]
-    search_query = st.text_input("🔍 Search Item")
+# Move search functionality outside the button
+search_query = st.text_input("🔍 Search Item")
 if search_query:
     filtered_df = edited[edited['Item'].str.contains(search_query, case=False)]
     st.dataframe(filtered_df)
 else:
     st.dataframe(edited)
+
+if st.button("Save Data"):
+    edited["Amount"] = edited["Sales"] * edited["Selling Price"]
     edited.to_csv(CSV_FILE, index=False)
     st.success(f"Data saved to {CSV_FILE}!")
 
