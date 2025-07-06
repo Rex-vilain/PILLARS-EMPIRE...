@@ -174,7 +174,7 @@ if selected_log:
 
 st.subheader("📉 Daily Financial Movement Breakdown")
 
-daily financial movements = {
+daily_financial_movements = {
     "Accommodation": accommodation,
     "Chama": chama,
     "Expenses": expenses,
@@ -184,13 +184,13 @@ daily financial movements = {
 
 import numpy as np
 
-values = np.array(list(expenses_data.values()))
+values = np.array(list(daily_financial_movements.values()))
 # Check for NaN values before plotting
 if np.isnan(values).any() or np.all(values == 0):
     st.error("Expenses data must contain valid non-zero values to plot the pie chart.")
 else:
     fig2, ax2 = plt.subplots()
-    ax2.pie(values, labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
+    ax2.pie(values, labels=daily_financial_movements.keys(), autopct='%1.1f%%', startangle=140)
     ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     st.pyplot(fig2)
 import streamlit as st
