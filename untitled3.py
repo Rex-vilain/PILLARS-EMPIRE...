@@ -142,6 +142,29 @@ if st.button("💾 Save Today's Financial Data"):
     df_fin.to_csv("financial_records.csv", index=False)
     st.success("Financial data saved successfully!")
 
+st.markdown("### 📅 View Past Records")
+selected_date = st.date_input("Select a date to view records")
+
+if selected_date:
+    try:
+        # Load the financial records
+        df_fin = pd.read_csv("financial_records.csv")
+        df_fin["Date"] = pd.to_datetime(df_fin["Date"]).dt.date
+
+        # Filter by selected date
+        daily_data = df_fin[df_fin["Date"] == selected_date]
+
+        if not daily_data.empty:
+            st.subheader(f"🧾 Financial Movements for {selected_date}")
+            st.write(daily_data.drop(columns=["Date"]).T.rename(columns={daily_data.index[0]: "Amount (Ksh)"}))
+
+            # You can also retrieve and show Daily Summary and Expenses from saved files if you store them similarly
+            # Example: daily_summary.csv, expenses.csv, etc.
+        else:
+            st.warning("No records found for this date.")
+    except FileNotFoundError:
+st.error("No records file found yet. Save some data first.")
+
 
 summary_data = {
     "Category": ["Total Sales", "Accommodation", "Chama", "Expenses", "Cash to Boss", "Profit"],
