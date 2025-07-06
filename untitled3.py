@@ -145,19 +145,6 @@ selected_date = st.date_input("Select a date to view records")
 
 if selected_date:
     try:
-    #Load and show stock sheet for selected date
-    df_stock = pd.read_csv("stock_records.csv")
-    df_stock["Date"] = pd.to_datetime(df_stock["Date"]).dt.date
-    stock_data = df_stock[df_stock["Date"] == selected_date]
-
-    if not stock_data.empty:
-        st.subheader(f"📦 Stock Sheet for {selected_date}")
-        st.dataframe(stock_data.drop(columns=["Date"]))
-    else:
-        st.info("No stock records found for this date.")
-except FileNotFoundError:
-    st.warning("Stock records file not found.")
-
         # Load the financial records
         df_fin = pd.read_csv("financial_records.csv")
         df_fin["Date"] = pd.to_datetime(df_fin["Date"]).dt.date
