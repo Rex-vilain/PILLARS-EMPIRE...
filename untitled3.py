@@ -124,6 +124,24 @@ to_boss = st.number_input("👨‍💼 Cash Handed to Boss (Ksh)") # Removed the
 total_income = total_sales + accommodation + chama
 profit = total_income - expenses - to_boss
 
+if st.button("💾 Save Today's Financial Data"):
+    financial_data = {
+        "Date": pd.Timestamp.now().strftime("%Y-%m-%d"),
+        "Accommodation": accommodation,
+        "Chama": chama,
+        "Expenses": expenses,
+        "Cash to Boss": to_boss
+    }
+
+    try:
+        df_fin = pd.read_csv("financial_records.csv")
+    except FileNotFoundError:
+        df_fin = pd.DataFrame()
+
+    df_fin = pd.concat([df_fin, pd.DataFrame([financial_data])], ignore_index=True)
+    df_fin.to_csv("financial_records.csv", index=False)
+    st.success("Financial data saved successfully!")
+
 
 summary_data = {
     "Category": ["Total Sales", "Accommodation", "Chama", "Expenses", "Cash to Boss", "Profit"],
