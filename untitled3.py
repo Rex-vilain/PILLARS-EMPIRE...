@@ -13,6 +13,7 @@ from datetime import datetime
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 st.set_page_config(layout="wide")
 st.title("Pillars Bar & Restaurant Stock Sheet")
