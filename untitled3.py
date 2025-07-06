@@ -110,11 +110,13 @@ df = load_data()
 edited = st.data_editor(df, use_container_width=True, num_rows="dynamic")
 
 
-total_sales = (edited["Sales"] * edited["Selling Price"]).sum()
-accommodation = st.number_input("Accommodation (Ksh)", 0)
-chama = st.number_input("Chama (Ksh)", 0)
-expenses = st.number_input("Expenses (Ksh)", 0)
-to_boss = st.number_input("Cash to Boss (Ksh)", 0)
+st.subheader("💵 Daily Financial Movements")
+st.markdown("*These reflect inflow/outflow of cash, not all are expenses.*")
+
+accommodation = st.number_input("🏨 Accommodation Revenue (Ksh)", 0)
+chama = st.number_input("📥 Chama Contributions (Ksh)", 0)
+expenses = st.number_input("💸 Total Expenses Used (Ksh)", 0)
+to_boss = st.number_input("👨‍💼 Cash Handed to Boss (Ksh)", 0)
 total_income = total_sales + accommodation + chama
 profit = total_income - (expenses + to_boss)
 
