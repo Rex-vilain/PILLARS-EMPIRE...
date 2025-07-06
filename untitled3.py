@@ -216,7 +216,7 @@ import matplotlib.pyplot as plt
 
 st.subheader("📊 Sales Summary Chart")
 
-Bar Chart of Sales per Item
+#Bar Chart of Sales per Item
 fig, ax = plt.subplots()
 edited_grouped = edited.groupby("Item")["Sales"].sum()
 ax.bar(edited_grouped.index, edited_grouped.values)
