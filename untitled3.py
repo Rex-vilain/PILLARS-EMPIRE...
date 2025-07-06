@@ -113,12 +113,26 @@ edited = st.data_editor(df, use_container_width=True, num_rows="dynamic")
 st.subheader("💵 Daily Financial Movements")
 st.markdown("*These reflect inflow/outflow of cash, not all are expenses.*")
 
+#Get sales data from stock sheet first
+total_sales = (edited["Sales"] * edited["Selling Price"]).sum()
+#Assuming you've already calculated total_sales above
+
 accommodation = st.number_input("🏨 Accommodation Revenue (Ksh)", 0)
 chama = st.number_input("📥 Chama Contributions (Ksh)", 0)
 expenses = st.number_input("💸 Total Expenses Used (Ksh)", 0)
-to_boss = st.number_input("👨‍💼 Cash Handed to Boss (Ksh)", 0)
+to_boss = st.number_input("👨‍💼 Cash Handed to Boss (Ksh)") # Removed the trailing comma
 total_income = total_sales + accommodation + chama
-profit = total_income - (expenses + to_boss)
+profit = total_income - expenses - to_boss
+
+
+summary_data = {
+    "Category": ["Total Sales", "Accommodation", "Chama", "Expenses", "Cash to Boss", "Profit"],
+    "Amount (Ksh)": [total_sales, accommodation, chama, expenses, to_boss, profit]
+}
+st.subheader("📊 Daily Summary Table ↩️")
+st.table(pd.DataFrame(summary_data))
+
+
 
 
 if not os.path.exists("data_logs"):
@@ -225,7 +239,7 @@ if os.path.exists("daily_expenses.csv"):
     st.dataframe(day_expenses[["Item", "Amount"]])
 else:
     st.info("No expenses recorded yet.")
-    
+
 summary_data = {
     "Category": ["Total Sales", "Accommodation", "Chama", "Expenses", "Cash to Boss", "Profit"],
     "Amount (Ksh)": [
