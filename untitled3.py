@@ -150,6 +150,43 @@ if selected_log:
     df_log = pd.read_csv(f"data_logs/{selected_log}")
     st.dataframe(df_log, use_container_width=True)
 
+st.subheader("📉 Expenses Breakdown")
+
+expenses_data = {
+    "Accommodation": accommodation,
+    "Chama": chama,
+    "Expenses": expenses,
+    "Cash to Boss": to_boss
+}
+
+fig2, ax2 = plt.subplots()
+ax2.pie(expenses_data.values(), labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
+ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+st.pyplot(fig2)
+import streamlit as st
+import pandas as pd
+
+Assuming you already have these variables calculated somewhere above:
+total_sales, accommodation, chama, expenses, to_boss, profit
+
+summary_data = {
+    "Category": ["Total Sales", "Accommodation", "Chama", "Expenses", "Cash to Boss", "Profit"],
+    "Amount (Ksh)": [
+        total_sales,
+        accommodation,
+        chama,
+        expenses,
+        to_boss,
+        profit
+    ]
+}
+
+summary_df = pd.DataFrame(summary_data)
+
+st.subheader("Daily Summary Table")
+st.table(summary_df)
+
 summary_data = {
     "Total Sales": [total_sales],
     "Accommodation": [accommodation],
@@ -175,6 +212,20 @@ final_df.to_csv("stock_sheet_summary.csv", index=False)
 
 
 csv = summary_df.to_csv(index=False).encode('utf-8')
+import matplotlib.pyplot as plt
+
+st.subheader("📊 Sales Summary Chart")
+
+Bar Chart of Sales per Item
+fig, ax = plt.subplots()
+edited_grouped = edited.groupby("Item")["Sales"].sum()
+ax.bar(edited_grouped.index, edited_grouped.values)
+ax.set_xlabel("Item")
+ax.set_ylabel("Total Sales")
+ax.set_title("Sales per Item")
+plt.xticks(rotation=45)
+
+st.pyplot(fig)
 
 st.download_button(
     label="📘 Download Stock Summary",
