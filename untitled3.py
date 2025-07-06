@@ -170,7 +170,7 @@ else:
     ax2.pie(values, labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
 
 fig2, ax2 = plt.subplots()
-ax2.pie(expenses_data.values(), labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
+ax2.pie(list(expenses_data.values()), labels=list(expenses_data.keys()), autopct='%1.1f%%', startangle=140)
 ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
 st.pyplot(fig2)
