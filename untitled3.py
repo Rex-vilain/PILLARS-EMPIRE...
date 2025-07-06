@@ -167,7 +167,7 @@ st.pyplot(fig2)
 import streamlit as st
 import pandas as pd
 
-Assuming you already have these variables calculated somewhere above:
+#Assuming you already have these variables calculated somewhere above:
 total_sales, accommodation, chama, expenses, to_boss, profit
 
 summary_data = {
