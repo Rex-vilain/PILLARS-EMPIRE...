@@ -201,7 +201,24 @@ summary_data = {
         profit
     ]
 }
+    if st.button("Save Summary"):
+    if "summary_data" not in st.session_state:
+        st.session_state.summary_data = []
 
+    st.session_state.summary_data.append({
+        "Total Sales": total_sales,
+        "Accommodation": accommodation,
+        "Chama": chama,
+        "Expenses": expenses,
+        "Cash to Boss": to_boss,
+        "Profit": profit
+    })
+
+if "summary_data" in st.session_state:
+    df = pd.DataFrame(st.session_state.summary_data)
+    df_melted = df.melt(var_name="Category", value_name="Amount (Ksh)")
+    st.subheader("📊 Daily Summary Table")
+    st.dataframe(df_melted)
 summary_df = pd.DataFrame(summary_data)
 
 st.subheader("Daily Summary Table")
