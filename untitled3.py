@@ -172,9 +172,9 @@ if selected_log:
     df_log = pd.read_csv(f"data_logs/{selected_log}")
     st.dataframe(df_log, use_container_width=True)
 
-st.subheader("📉 Expenses Breakdown")
+st.subheader("📉 Daily Financial Movement Breakdown")
 
-expenses_data = {
+daily financial movements = {
     "Accommodation": accommodation,
     "Chama": chama,
     "Expenses": expenses,
