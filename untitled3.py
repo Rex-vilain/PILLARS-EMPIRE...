@@ -165,6 +165,15 @@ expenses_data = {
     "Cash to Boss": to_boss
 }
 
+import matplotlib.pyplot as plt
+values = list(expenses_data.values())
+if not any(v > 0 for v in values):
+    st.error("Expenses data must contain positive, non-zero values for the pie chart.")
+else:
+    fig2, ax2 = plt.subplots()
+    ax2.pie(values, labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
+    ax2.axis('equal')
+    st.pyplot(fig2)
 
 import numpy as np
 values = np.array(list(expenses_data.values()))
