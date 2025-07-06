@@ -120,7 +120,7 @@ log_files = sorted(os.listdir("data_logs"))
 selected_log = st.selectbox("Select a Date to View Records", log_files)
 if selected_log:
     df_log = pd.read_csv(f"data_logs/{selected_log}")
-    st.dataframe(df_log)
+    st.dataframe(df_log, use_container_width=True)
 
 summary_data = {
     "Total Sales": [total_sales],
