@@ -167,7 +167,11 @@ expenses_data = {
 
 
 import numpy as np
-
+values = np.array(list(expenses_data.values()))
+if np.any(values <= 0) or values.sum() == 0:
+    st.error("Expenses data must contain positive, non-zero values.")
+else:
+    # plot pie chart here
 values = np.array(list(expenses_data.values()))
 # Check for NaN values before plotting
 if np.isnan(values).any() or np.all(values == 0):
