@@ -165,20 +165,13 @@ expenses_data = {
     "Cash to Boss": to_boss
 }
 
-import matplotlib.pyplot as plt
-values = list(expenses_data.values())
-if not any(v > 0 for v in values):
-    st.error("Expenses data must contain positive, non-zero values for the pie chart.")
-else:
-    fig2, ax2 = plt.subplots()
-    ax2.pie(values, labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
-    ax2.axis('equal')
-    st.pyplot(fig2)
 
 import numpy as np
+
 values = np.array(list(expenses_data.values()))
-if np.any(values < 0) or values.sum() == 0:
-    st.error("Expenses data must contain positive, non-zero values for the pie chart.")
+# Check for NaN values before plotting
+if np.isnan(values).any() or np.all(values == 0):
+    st.error("Expenses data must contain valid non-zero values to plot the pie chart.")
 else:
     fig2, ax2 = plt.subplots()
     ax2.pie(values, labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
@@ -201,24 +194,7 @@ summary_data = {
         profit
     ]
 }
-    if st.button("Save Summary"):
-    if "summary_data" not in st.session_state:
-        st.session_state.summary_data = []
 
-    st.session_state.summary_data.append({
-        "Total Sales": total_sales,
-        "Accommodation": accommodation,
-        "Chama": chama,
-        "Expenses": expenses,
-        "Cash to Boss": to_boss,
-        "Profit": profit
-    })
-
-if "summary_data" in st.session_state:
-    df = pd.DataFrame(st.session_state.summary_data)
-    df_melted = df.melt(var_name="Category", value_name="Amount (Ksh)")
-    st.subheader("📊 Daily Summary Table")
-    st.dataframe(df_melted)
 summary_df = pd.DataFrame(summary_data)
 
 st.subheader("Daily Summary Table")
