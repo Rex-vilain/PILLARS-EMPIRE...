@@ -1,4 +1,3 @@
-- Python 3.7+  
-- Streamlit  
-- Pandas
-- Matplotlib
+streamlit
+pandas
+matplotlib
