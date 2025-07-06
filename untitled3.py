@@ -168,14 +168,8 @@ expenses_data = {
 
 import numpy as np
 values = np.array(list(expenses_data.values()))
-if np.any(values <= 0) or values.sum() == 0:
-    st.error("Expenses data must contain positive, non-zero values.")
-else:
-    # plot pie chart here
-values = np.array(list(expenses_data.values()))
-# Check for NaN values before plotting
-if np.isnan(values).any() or np.all(values == 0):
-    st.error("Expenses data must contain valid non-zero values to plot the pie chart.")
+if np.any(values < 0) or values.sum() == 0:
+    st.error("Expenses data must contain positive, non-zero values for the pie chart.")
 else:
     fig2, ax2 = plt.subplots()
     ax2.pie(values, labels=expenses_data.keys(), autopct='%1.1f%%', startangle=140)
@@ -284,5 +278,3 @@ st.download_button(
     file_name="daily_stock_data.csv",
     mime="text/csv"
 )
-
-
