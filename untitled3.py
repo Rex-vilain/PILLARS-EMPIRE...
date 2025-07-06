@@ -183,6 +183,47 @@ import pandas as pd
 #Assuming you already have these variables calculated somewhere above:
 # total_sales, accommodation, chama, expenses, to_boss, profit
 
+import datetime
+import os
+
+st.subheader("📅 Daily Expenses Entry")
+
+
+selected_date = st.date_input("Select Date", datetime.date.today())
+
+
+default_expenses = pd.DataFrame({
+    "Item": ["Accommodation", "Chama", "Transport", "Food", "Misc"],
+    "Amount": [0.0]*5
+})
+edited_expenses = st.data_editor(default_expenses, num_rows="dynamic")
+
+
+if st.button("Save Expenses for the Day"):
+    expenses_path = "daily_expenses.csv"
+    edited_expenses["Date"] = selected_date
+
+    if os.path.exists(expenses_path):
+        existing = pd.read_csv(expenses_path)
+        # Remove old entry for selected date
+        existing = existing[existing["Date"] != str(selected_date)]
+        final = pd.concat([existing, edited_expenses], ignore_index=True)
+    else:
+        final = edited_expenses
+
+    final.to_csv(expenses_path, index=False)
+    st.success("✅ Expenses saved!")
+
+
+if os.path.exists("daily_expenses.csv"):
+    all_expenses = pd.read_csv("daily_expenses.csv")
+    day_expenses = all_expenses[all_expenses["Date"] == str(selected_date)]
+
+    st.subheader(f"📁 Expenses for {selected_date}")
+    st.dataframe(day_expenses[["Item", "Amount"]])
+else:
+    st.info("No expenses recorded yet.")
+    
 summary_data = {
     "Category": ["Total Sales", "Accommodation", "Chama", "Expenses", "Cash to Boss", "Profit"],
     "Amount (Ksh)": [
